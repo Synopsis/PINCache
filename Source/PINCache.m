@@ -59,7 +59,19 @@ static NSString * const PINCacheSharedName = @"PINCacheShared";
                   keyEncoder:(PINDiskCacheKeyEncoderBlock)keyEncoder
                   keyDecoder:(PINDiskCacheKeyDecoderBlock)keyDecoder
                     ttlCache:(BOOL)ttlCache
+
 {
+    return [self initWithName:name rootPath:rootPath prefix:PINDiskCachePrefix serializer:serializer deserializer:deserializer keyEncoder:keyEncoder keyDecoder:keyDecoder ttlCache:ttlCache];
+}
+
+- (instancetype)initWithName:(NSString *)name
+                    rootPath:(NSString *)rootPath
+                      prefix:(NSString *)prefix
+                  serializer:(PINDiskCacheSerializerBlock)serializer
+                deserializer:(PINDiskCacheDeserializerBlock)deserializer
+                  keyEncoder:(PINDiskCacheKeyEncoderBlock)keyEncoder
+                  keyDecoder:(PINDiskCacheKeyDecoderBlock)keyDecoder
+                    ttlCache:(BOOL)ttlCache{
     if (!name)
         return nil;
     
@@ -69,7 +81,7 @@ static NSString * const PINCacheSharedName = @"PINCacheShared";
         //10 may actually be a bit high, but currently much of our threads are blocked on empyting the trash. Until we can resolve that, lets bump this up.
         _operationQueue = [[PINOperationQueue alloc] initWithMaxConcurrentOperations:10];
         _diskCache = [[PINDiskCache alloc] initWithName:_name
-                                                 prefix:PINDiskCachePrefix
+                                                 prefix: (prefix) ? prefix : PINDiskCachePrefix
                                                rootPath:rootPath
                                              serializer:serializer
                                            deserializer:deserializer

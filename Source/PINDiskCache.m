@@ -291,7 +291,15 @@ static NSURL *_sharedTrashURL;
 
 + (NSURL *)cacheURLWithRootPath:(NSString *)rootPath prefix:(NSString *)prefix name:(NSString *)name
 {
-    NSString *pathComponent = [[NSString alloc] initWithFormat:@"%@.%@", prefix, name];
+    NSString *pathComponent = nil;
+    if ( prefix && ![prefix isEqualToString:@""] )
+    {
+        pathComponent = [[NSString alloc] initWithFormat:@"%@.%@", prefix, name];
+    }
+    else
+    {
+        pathComponent = name;
+    }
     return [NSURL fileURLWithPathComponents:@[ rootPath, pathComponent ]];
 }
 
