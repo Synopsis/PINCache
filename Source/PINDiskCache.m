@@ -303,6 +303,17 @@ static NSURL *_sharedTrashURL;
     return [NSURL fileURLWithPathComponents:@[ rootPath, pathComponent ]];
 }
 
+
+- (NSArray<NSString*>*) keys;
+{
+	NSArray* keys = nil;
+	[self lock];
+	keys = [[self.metadata allKeys] copy];
+	[self unlock];
+
+	return keys;
+}
+
 #pragma mark - Private Methods -
 
 - (NSURL *)encodedFileURLForKey:(NSString *)key

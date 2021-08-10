@@ -132,6 +132,20 @@ static NSString * const PINMemoryCacheSharedName = @"PINMemoryCacheSharedName";
     return cache;
 }
 
+/**
+ List of all keys in both memory and disk caches.
+ */
+- (NSArray<NSString*>*) keys;
+{
+	NSArray* keys = nil;
+	[self lock];
+	keys = [[self.dictionary allKeys] copy];
+	[self unlock];
+
+	return keys;
+}
+
+
 #pragma mark - Private Methods -
 
 - (void)didReceiveMemoryWarningNotification:(NSNotification *)notification {

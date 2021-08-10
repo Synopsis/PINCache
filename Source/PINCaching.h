@@ -44,6 +44,11 @@ typedef void (^PINCacheObjectContainmentBlock)(BOOL containsObject);
  */
 @property (readonly) NSString *name;
 
+/**
+ List of all keys in both memory and disk caches.
+ */
+- (NSArray<NSString*>*) keys;
+
 #pragma mark - Asynchronous Methods
 
 /// @name Asynchronous Methods
@@ -160,7 +165,11 @@ typedef void (^PINCacheObjectContainmentBlock)(BOOL containsObject);
 
 /**
  This method determines whether an object is present for the given key in the cache.
- 
+ d until the object is available.
+  Uses a lock to achieve synchronicity on the disk cache.
+  
+  @see objectForKeyAsync:completion:
+  @param key The key associated with the object.
  @see containsObjectForKeyAsync:completion:
  @param key The key associated with the object.
  @result YES if an object is present for the given key in the cache, otherwise NO.
@@ -168,11 +177,7 @@ typedef void (^PINCacheObjectContainmentBlock)(BOOL containsObject);
 - (BOOL)containsObjectForKey:(NSString *)key;
 
 /**
- Retrieves the object for the specified key. This method blocks the calling thread until the object is available.
- Uses a lock to achieve synchronicity on the disk cache.
- 
- @see objectForKeyAsync:completion:
- @param key The key associated with the object.
+ Retrieves the object for the specified key. This method blocks the calling threa
  @result The object for the specified key.
  */
 - (nullable id)objectForKey:(NSString *)key;

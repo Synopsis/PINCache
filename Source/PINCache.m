@@ -111,6 +111,20 @@ static NSString * const PINCacheSharedName = @"PINCacheShared";
     return cache;
 }
 
+/**
+ List of all keys in both memory and disk caches.
+ */
+- (NSArray<NSString*>*) keys
+{
+	NSMutableSet<NSString*>* availableKeys = [[NSMutableSet alloc] init];
+	
+	[availableKeys addObjectsFromArray:[self.memoryCache keys]];
+	[availableKeys addObjectsFromArray:[self.diskCache keys]];
+
+	return [availableKeys allObjects];
+}
+
+
 #pragma mark - Public Asynchronous Methods -
 
 - (void)containsObjectForKeyAsync:(NSString *)key completion:(PINCacheObjectContainmentBlock)block
