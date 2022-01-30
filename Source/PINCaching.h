@@ -168,8 +168,7 @@ typedef void (^PINCacheObjectContainmentBlock)(BOOL containsObject);
  d until the object is available.
   Uses a lock to achieve synchronicity on the disk cache.
   
-  @see objectForKeyAsync:completion:
-  @param key The key associated with the object.
+ @see objectForKeyAsync:completion:
  @see containsObjectForKeyAsync:completion:
  @param key The key associated with the object.
  @result YES if an object is present for the given key in the cache, otherwise NO.
